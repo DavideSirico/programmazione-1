@@ -30,7 +30,9 @@ Studente* genera_studente(char nome[], char cognome[], int matricola, float medi
 
 
 int main() {
-
+    cout << "ciao mondo! ";
+    int i = 0;
+    cout << i;
     return 0;
 }
 
