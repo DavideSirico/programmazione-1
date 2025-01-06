@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-bool palindromo_ric(int *array, int dim, int i_s, int i_e);
+bool palindromo_ric(int *array, int i_s, int i_e);
 bool palindromo(int *array, int dim);
 int main() {
     int dim;
@@ -20,7 +20,7 @@ int main() {
     } else {
         cout << "Sequenza non palindroma";
     }
-    delete array;
+    delete[] array;
     return 0;
 }
 

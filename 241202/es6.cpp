@@ -37,7 +37,6 @@ void left_shift(char v[], int length, int offset) {
     char *temp = new char[offset];
     for(int i = 0; i < offset; i++) {
         temp[i] = v[i];
-
     }
     
     for(int i = 0; i < length - offset; i++) {

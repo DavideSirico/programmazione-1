@@ -18,5 +18,4 @@ int main() {
 
 void procedura(double* raggio, double *area) {
     *area = (*raggio) * (*raggio) * 3.14;
-    
 }
