@@ -34,7 +34,5 @@ operazioni dimacs
 OGGI:
     - dimacs
     - insert queue
-    - insert stack
-    - insert list
     - sumElement Stack
     - controllare con valgrind

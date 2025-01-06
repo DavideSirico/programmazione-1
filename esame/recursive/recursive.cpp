@@ -16,15 +16,15 @@ char* int_to_char(int n[], int dim);
 char* str_cpy(char *dest, char *src);
 // TODO: TESTARE
 int bin_to_dec(int n);
-int* bin_to_dec(int n[], int dim);
+int bin_to_dec(int n[], int dim);
 int dec_to_bin(int n);
-int* dec_to_bin(int n[], int dim);
-int main() {
+int dec_to_bin(int n[], int dim);
+/* int main() {
     int arr1[] = {1, 3, 5, 7, 9};
     char *str = int_to_char(arr1,5);
     cout << str << endl;
     return 0;
-}
+} */
 
 int str_len(char *str) {
     if (*str == '\0') {
@@ -69,7 +69,7 @@ void sort(int Array[], int From, int To) {
 }
 
 void reverse(int *arr, int n) {
-    if (n == 0) {
+    if (n <= 1) {
         return;
     }
     int temp = arr[0];
@@ -171,20 +171,12 @@ int bin_to_dec(int n) {
     }
     return (n % 10) + 2 * bin_to_dec(n / 10);
 }
-int* bin_to_dec(int n[], int dim) {
+int bin_to_dec(int n[], int dim) {
     if (dim == 0) {
-        int *arr = new int[1];
-        arr[0] = 0;
-        return arr;
+        return 0;  // Base case: if the array is empty, return 0
     }
-    int *arr = bin_to_dec(n, dim - 1);
-    int *arr2 = new int[dim + 1];
-    for (int i = 0; i < dim; i++) {
-        arr2[i] = arr[i];
-    }
-    arr2[dim] = bin_to_dec(n[dim - 1]);
-    delete[] arr;
-    return arr2;
+    // Recurse for the remaining array and shift the current digit
+    return n[0] * (1 << (dim - 1)) + bin_to_dec(n + 1, dim - 1);
 }
 
 int dec_to_bin(int n) {
@@ -193,18 +185,4 @@ int dec_to_bin(int n) {
     }
     return (n % 2) + 10 * dec_to_bin(n / 2);
 }
-int* dec_to_bin(int n[], int dim) {
-    if (dim == 0) {
-        int *arr = new int[1];
-        arr[0] = 0;
-        return arr;
-    }
-    int *arr = dec_to_bin(n, dim - 1);
-    int *arr2 = new int[dim + 1];
-    for (int i = 0; i < dim; i++) {
-        arr2[i] = arr[i];
-    }
-    arr2[dim] = dec_to_bin(n[dim - 1]);
-    delete[] arr;
-    return arr2;
-}
+

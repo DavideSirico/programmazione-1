@@ -83,6 +83,7 @@ void deleteQueue(Queue * &s) {
     while (!isEmpty(s)) {
         dequeue(s);
     }
+    delete s;
 }
 
 void printQueue(Queue * s, const char * message = "Queue: ") {
@@ -103,7 +104,7 @@ void printQueue(Queue * s, const char * message = "Queue: ") {
 
 
 int getElement(Queue *& q, int n);
-int getElement_aux(Queue*& q, int n, int result);
+void getElement_aux(Queue*& q, int n, int &result);
 void removeElement(Queue *& q, int n);
 void removeElement_aux(Queue*& q, int n);
 int findElement(Queue *& q, int n);
@@ -113,42 +114,43 @@ void changeElement_aux(Queue*& q, int index, int value, int index_start);
 void sort(Queue *& q);
 int sumElementsWithDistance(Queue *& q, int n);
 int sumElementsWithDistance_aux(Queue *& q, int n, int to_remove);
-// TODO
-void insertElement(Queue *& q, int index, int value);
-void insertElement_aux(Queue *& q, int index, int value);
-
+/* 
 int main() {
     srand(time(NULL));
     Queue *q = initQueue();
-    for(int i = 1000; i >= 0; i--) {
-        enqueue(q,rand()%100);
-
+    for(int i = 0; i < 10; i++) {
+        enqueue(q,i);
     }
-    // insertElement(q, 0, 1000);
-    sort(q);
+
     printQueue(q);
     return 0;
 }
-
+ */
 int sumElementsWithDistance_aux(Queue *& q, int n, int to_remove) {
     if (isEmpty(q)) {
         return 0;
     }
     int current = dequeue(q);
-    if(to_remove == 0) {
+    int sum = 0; // Initialize sum to ensure it's defined in all cases.
+
+    if (to_remove == 0) {
         to_remove = n;
-        int sum = sumElementsWithDistance_aux(q,n,to_remove);
+        sum = sumElementsWithDistance_aux(q, n, to_remove);
         enqueue(q, current);
-        // std::cout << "CURRENT ELEMENT: " << current << std::endl;
-        return sum+current;
+        return sum + current;
     }
-    if(to_remove <= n) {
+    if (to_remove <= n) {
         to_remove--;
-        int sum = sumElementsWithDistance_aux(q,n,to_remove);
+        sum = sumElementsWithDistance_aux(q, n, to_remove);
         enqueue(q, current);
         return sum;
     }
+
+    // Add a fallback return to handle any unexpected case
+    enqueue(q, current);
+    return sum;  // Ensure that the function always returns an int.
 }
+
 
 int sumElementsWithDistance(Queue *& q, int n) {
     int ris = sumElementsWithDistance_aux(q,n,0);
@@ -157,22 +159,21 @@ int sumElementsWithDistance(Queue *& q, int n) {
 }
 
 int getElement(Queue *& q, int n) {
-    int result = 0;
-    int ris = getElement_aux(q, n, result);
+    int res;
+    getElement_aux(q, n, res);
     reverse(q);
-    return ris;
+    return res;
 }
-int getElement_aux(Queue*& q, int n, int result) {
+void getElement_aux(Queue*& q, int n, int &result) {
     if(isEmpty(q)) {
-        return result;
-    }
-    if(n == 0) {
-        result = first(q);
+        return;
     }
     int value = dequeue(q);
-    int ris = getElement_aux(q, n - 1, result);
+    if(n == 0) {
+        result = value;
+    }
+    getElement_aux(q, n - 1, result);
     enqueue(q, value);
-    return ris;
 }
 
 void removeElement(Queue *& q, int n) {
@@ -264,15 +265,4 @@ void merge(Queue *& q1, Queue *& q2) {
         dequeue(q2);
     }
     sort(q1);
-}
-
-void insertElement(Queue *& q, int index, int value) {
-    if (index == 1) {
-        enqueue(q, value);
-        return;
-    }
-
-    int tempValue = dequeue(q);
-    insertElement(q, value, index - 1);
-    enqueue(q, tempValue);
 }

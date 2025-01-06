@@ -70,6 +70,15 @@ Cell* dequeue(Queue * &s) {
     return value;
 }
 
+void deleteQueue(Queue * &s) {
+    while (!isEmpty(s)) {
+        Cell *cell = dequeue(s);
+        delete cell;
+    }
+    delete s;
+}
+
+
 bool findPath(int M[R][C], int start_x, int start_y, int end_x, int end_y) {
 	// 1) Create BFS queue q
 	// queue<BFSElement> q;
@@ -79,7 +88,7 @@ bool findPath(int M[R][C], int start_x, int start_y, int end_x, int end_y) {
 	c->i = start_x;
 	c->j = start_y;
 	enqueue(q, c);
-	
+	delete c;
 
 	// 3) run BFS algorithm with q.
 	while (!isEmpty(q)) {
@@ -90,6 +99,7 @@ bool findPath(int M[R][C], int start_x, int start_y, int end_x, int end_y) {
 		dequeue(q);
 		int i = x->i;
 		int j = x->j;
+		delete x;
 
 		// skipping cells which are not valid.
 		// if outside the matrix bounds
@@ -103,6 +113,8 @@ bool findPath(int M[R][C], int start_x, int start_y, int end_x, int end_y) {
 			// vertex x=(i,j) such that M[i][j] is 2 stop and
 			// return true
 			if (i == end_x && j == end_y)
+				deleteQueue(q);
+				delete q;
 				return true;
 
 			// marking as wall upon successful visitation
@@ -125,6 +137,8 @@ bool findPath(int M[R][C], int start_x, int start_y, int end_x, int end_y) {
 	// BFS algorithm terminated without returning true
 	// then there was no element M[i][j] which is 2, then
 	// return false
+	deleteQueue(q);
+	delete q;
 	return false;
 }
 

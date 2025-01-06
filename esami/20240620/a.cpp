@@ -133,14 +133,14 @@ int main() {
 
 // Inserire qui sotto la definizione della funzione calcola
 
-int get_value(struct Stack *&s, int index) {
-    if(index == 1) {
-        return top(s); 
+int getElement(Stack *& s, int n) {
+    if(n == 0) {
+        return top(s);
     }
-    int element = pop(s);
-    int r = get_value(s,index-1);
-    push(s,element);
-    return r;
+    int value = pop(s);
+    int ris = getElement(s, n - 1);
+    push(s, value);
+    return ris;
 }
 
 void calcola_aux(struct Stack *&s1, struct Stack *&s2, int l, int index) {
@@ -148,13 +148,13 @@ void calcola_aux(struct Stack *&s1, struct Stack *&s2, int l, int index) {
         return;
     }
     int current_value = pop(s1);
-    int last = get_value(s2,l-index);
+    int last = getElement(s2,l-index);
     calcola_aux(s1,s2,l,index+1);
     push(s1,current_value*last);
 }
 
 void calcola(struct Stack * &s1, struct Stack * &s2) {
-    int l = lenght(s1);
+    int l = lenght(s1)-1;
     calcola_aux(s1,s2,l,0);
 }
 // Inserire qui sopra la definizione della funzione stackOperator

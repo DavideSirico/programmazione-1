@@ -82,7 +82,6 @@ void printStack(struct Stack * s, const char * message = "Stack: ") {
 }
 
 int getElement(Stack *& s, int n);
-int getElement_aux(Stack*& s, int n, int result);
 void removeElement(Stack *& s, int n);
 void removeElement_aux(Stack*& s, int n);
 bool findElement(Stack *& s, int n);
@@ -91,21 +90,19 @@ void changeElement_aux(Stack*& s, int index, int value, int index_start);
 void reverse(Stack *& s);
 void insert_last(Stack *& s, int n);
 void sort(Stack *& s);
-// TODO
 void insertElement(Stack *& s, int index, int value);
-void insertElement_aux(Stack *& s, int index, int value);
 int sumElementsWithDistance(Stack *& s, int n);
 int sumElementsWithDistance_aux(Stack *& s, int n, int to_remove);
-int main() {
+
+/* int main() {
     Stack *s = initStack();
     for(int i = 0; i < 10; i++) {
         push(s,i);
     }
     printStack(s);
-    changeElement(s, 2, 99);
-    printStack(s);
+    std::cout << getElement(s, 0);
     return 0;
-}
+} */
 
 void insert_last(Stack *& s, int n) {
     if (isEmpty(s)){
@@ -128,19 +125,11 @@ void reverse(Stack *& s) {
 }
 
 int getElement(Stack *& s, int n) {
-    int result = 0;
-    int ris = getElement_aux(s, n, result);
-    return ris;
-}
-int getElement_aux(Stack*& s, int n, int result) {
-    if(isEmpty(s)) {
-        return result;
-    }
     if(n == 0) {
-        result = top(s);
+        return top(s);
     }
     int value = pop(s);
-    int ris = getElement_aux(s, n - 1, result);
+    int ris = getElement(s, n - 1);
     push(s, value);
     return ris;
 }
@@ -222,10 +211,47 @@ void sort(Stack *& s) {
     insertSorted(s, topElement);
 }
 
+int sumElementsWithDistance_aux(Stack *&s, int n, int to_remove) {
+    if (isEmpty(s)) {
+        return 0;
+    }
+    int current = pop(s);  // Pop element from stack
+    
+    int sum = 0;
+    if (to_remove == 0) {
+        to_remove = n;
+        sum = sumElementsWithDistance_aux(s, n, to_remove);
+        sum += current;
+    } else if (to_remove <= n) {
+        to_remove--;
+        sum = sumElementsWithDistance_aux(s, n, to_remove);
+    }
+    
+    push(s, current);  // Ensure the element is pushed back to the stack
+    return sum;
+}
+
+
 int sumElementsWithDistance(Stack *& s, int n) {
-
-}
-int sumElementsWithDistance_aux(Stack *& s, int n, int to_remove) {
-
+    int ris = sumElementsWithDistance_aux(s,n,0);
+    return ris;
 }
 
+void insertElement(Stack *& s, int element, int index) {
+    if (index == 0) {
+        push(s, element);
+        return;
+    }
+    
+    if (isEmpty(s)) {
+        return;
+    }
+
+    // Pop the top element
+    int topElement = top(s);
+    pop(s);
+    insertElement(s, element, index-1);
+
+    // Push the previously popped element back
+    push(s, topElement);
+}

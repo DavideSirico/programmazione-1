@@ -77,13 +77,22 @@ void remove_first(nodo * & s) {
 }
 
 nodo * remove_last(nodo * & s) {
-    if (s->next->next == NULL) {
-        nodo *temp = s->next;
-        s->next = NULL;
-        return temp;
+    if (s == nullptr) {
+        return nullptr; // If the list is empty, return nullptr
     }
+
+    if (s->next == nullptr) {
+        // If there is only one node
+        nodo *temp = s;
+        s = nullptr;
+        delete temp; // Free the memory of the last node
+        return nullptr;
+    }
+
+    // Recursively remove the last node
     return remove_last(s->next);
 }
+
 
 // Rimuove l'elemento in posizione index ricorsiva
 void remove_element_index(nodo * & s, int index) {
@@ -222,7 +231,7 @@ void insert_at(nodo *& head, int value, int n) {
     if (n == 0) {
         nodo * new_node = new nodo;
         new_node->dato = value;
-        new_node->next = nullptr;
+        new_node->next = head;
         head = new_node;
         return;
     }
@@ -231,7 +240,6 @@ void insert_at(nodo *& head, int value, int n) {
     }
     insert_at(head->next, value, n - 1);
 }
-
 
 int main() {
   nodo * L1 = NULL;
