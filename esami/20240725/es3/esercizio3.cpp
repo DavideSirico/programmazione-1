@@ -96,7 +96,7 @@ void printQueue(Queue * s, const char * message = "Queue: ") {
 // Non modificare questa parte sopra del codice
 
 // Inserire qui sotto la dichiarazione della funzione calcola
-
+Queue * calcola(Queue *& q);
 // Inserire qui sopra la dichiarazione della funzione calcola
 
 
@@ -142,4 +142,34 @@ int main() {
 
 // Inserire qui sotto la definizione della funzione calcola
 
+void reverse(Queue * & s) {
+    if (!isEmpty(s)) {
+        int v = dequeue(s);
+        reverse(s);
+        enqueue(s, v);
+    }
+}
+
+// Inserire qui sotto la definizione della funzione calcola
+void calcolaRecur(Queue * & q, Queue * & result, int count[]) {
+    if (isEmpty(q)) {
+        return;
+    }
+    int value = dequeue(q);
+    count[value]++;
+    calcolaRecur(q, result, count);
+    enqueue(q, value);
+    enqueue(result, count[value]);
+    count[value]--;
+    enqueue(result, value);
+}
+
+Queue * calcola(Queue * & q) {
+    Queue * result = initQueue();
+    int count[10] = {0};
+    calcolaRecur(q, result, count);
+    reverse(q);
+    reverse(result);
+    return result;
+}
 // Inserire qui sopra la definizione della funzione calcola
