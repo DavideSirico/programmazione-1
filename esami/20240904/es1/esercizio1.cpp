@@ -6,14 +6,14 @@
 void print_clauses(int ** clauses);
 int main(int argc, char **argv) {
     if(argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " <number>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <number>" << std::endl;
         return 1;
     }
 
     std::ifstream in;
     in.open(argv[1], std::ios::in);
     if(in.fail()) {
-        std::cerr << "Error opening file \"" << argv[1] << "\"" << std::endl;
+        std::cout << "Error opening file \"" << argv[1] << "\"" << std::endl;
         return 1;
     }
     char buffer1[256];

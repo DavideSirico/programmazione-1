@@ -71,10 +71,10 @@ void printStack(struct Stack * s, const char * message = "Stack: ") {
     }
     else
     {
-        std::cout << message;
+        std::cout << message << std::endl;
         struct Stack * temp = s;
         while (temp != nullptr) {
-            std::cout << temp->data << " ";
+            std::cout << temp->data << "\n";
             temp = temp->next;
         }
         std::cout << std::endl;
@@ -94,7 +94,7 @@ void insertElement(Stack *& s, int index, int value);
 int sumElementsWithDistance(Stack *& s, int n);
 int sumElementsWithDistance_aux(Stack *& s, int n, int to_remove);
 
-/* int main() {
+int main() {
     Stack *s = initStack();
     for(int i = 0; i < 10; i++) {
         push(s,i);
@@ -102,7 +102,7 @@ int sumElementsWithDistance_aux(Stack *& s, int n, int to_remove);
     printStack(s);
     std::cout << getElement(s, 0);
     return 0;
-} */
+}
 
 void insert_last(Stack *& s, int n) {
     if (isEmpty(s)){

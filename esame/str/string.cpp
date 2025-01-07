@@ -1,5 +1,6 @@
 #include <iostream>
 
+// cin >> noskipws
 int Length_Str(char *str);
 void Resize_Str(char *str);
 int ToInt_Str(char *str);

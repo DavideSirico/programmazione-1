@@ -114,18 +114,18 @@ void changeElement_aux(Queue*& q, int index, int value, int index_start);
 void sort(Queue *& q);
 int sumElementsWithDistance(Queue *& q, int n);
 int sumElementsWithDistance_aux(Queue *& q, int n, int to_remove);
-/* 
+
 int main() {
     srand(time(NULL));
     Queue *q = initQueue();
     for(int i = 0; i < 10; i++) {
         enqueue(q,i);
     }
-
+    
     printQueue(q);
+    std::cout << getElement(q, 0);
     return 0;
 }
- */
 int sumElementsWithDistance_aux(Queue *& q, int n, int to_remove) {
     if (isEmpty(q)) {
         return 0;

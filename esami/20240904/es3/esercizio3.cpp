@@ -80,7 +80,7 @@ void printStack(struct Stack * s, const char * message = "Stack: ") {
 // Non modificare questa parte sopra del codice
 
 // Inserire qui sotto la dichiarazione della funzione gioco
-
+int gioco(Stack *& s1, Stack *& s2);
 // Inserire qui sopra la dichiarazione della funzione gioco
 
 
@@ -138,5 +138,22 @@ int main() {
 
 // Inserire qui sotto la definizione della funzione gioco
 
-
+int gioco(Stack *& s1, Stack *& s2) {
+    while(!isEmpty(s1) && !isEmpty(s2)) {
+        int somma = (top(s1) + top(s2))%10;
+        if(somma < 5) {
+            pop(s2);
+        } else {
+            pop(s1);
+        }
+    }
+    if(isEmpty(s1) && isEmpty(s2)) {
+        return 0;
+    }
+    if(isEmpty(s1)) {
+        return 2;
+    } else {
+        return 1;
+    }
+}
 // Inserire qui sopra la definizione della funzione gioco

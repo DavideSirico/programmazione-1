@@ -108,7 +108,7 @@ void printList(struct List * l, const char * message = "List: ") {
 // Non modificare questa parte sopra del codice
 
 // Inserire qui sotto la dichiarazione della funzione calcola
-
+List * calcola(Stack *& s1, Stack *& s2);
 // Inserire qui sopra la dichiarazione della funzione calcola
 
 
@@ -169,5 +169,47 @@ int main() {
 
 // Inserire qui sotto la definizione della funzione calcola
 
+void insert_first(List * &s, int d) {
+    List * n = new List;
+    n->data = d;
+    n->next = s;
+    s = n;
+}
+void insert_order(List * & s, int d) {
+    if (s == NULL || s->data < d) {
+        insert_first(s, d);
+    }
+    else {
+        insert_order(s->next, d);
+    }
+}
+
+
+void calcola_aux(Stack *& s1, Stack *& s2, int index, List *& l) {
+    if(isEmpty(s1)) {
+        return;
+    }
+    int r;
+    int n;
+    if(index%2==0) {
+        r = pop(s1);
+        n = pop(s2);
+    } else {
+        r = pop(s2);
+        n = pop(s1);
+    }
+    insert_order(l, r);
+    calcola_aux(s1,s2,index+1,l);
+    push(s2,n);
+    push(s1,r);
+
+}
+
+List * calcola(Stack *& s1, Stack *& s2) {
+    List *l = nullptr;
+    calcola_aux(s1, s2, 0, l);
+    return l;
+}
 
 // Inserire qui sopra la definizione della funzione calcola
+
